@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designspace format="3.0">
+	<axes>
+		<axis tag="AX01" name="Stroke width" minimum="0.0" default="0.5" maximum="1.0"/>
+		<axis tag="AX02" name="Stroke height" minimum="0.0" default="0.5" maximum="1.0"/>
+		<axis tag="AX03" name="Stretch"       minimum="0.0" default="0.5" maximum="1.0"/>
+	</axes>
+	<sources>
+		<source filename="NFGEB2025-000.ufo" familyname="NFGEB2025" stylename="000">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-001.ufo" familyname="NFGEB2025" stylename="001">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-002.ufo" familyname="NFGEB2025" stylename="002">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-010.ufo" familyname="NFGEB2025" stylename="010">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-011.ufo" familyname="NFGEB2025" stylename="011">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-012.ufo" familyname="NFGEB2025" stylename="012">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-020.ufo" familyname="NFGEB2025" stylename="020">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-021.ufo" familyname="NFGEB2025" stylename="021">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-022.ufo" familyname="NFGEB2025" stylename="022">
+			<location>
+				<dimension name="Stroke width" xvalue="0.0" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-100.ufo" familyname="NFGEB2025" stylename="100">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-101.ufo" familyname="NFGEB2025" stylename="101">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-102.ufo" familyname="NFGEB2025" stylename="102">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-110.ufo" familyname="NFGEB2025" stylename="110">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-111.ufo" familyname="NFGEB2025" stylename="111">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-112.ufo" familyname="NFGEB2025" stylename="112">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-120.ufo" familyname="NFGEB2025" stylename="120">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-121.ufo" familyname="NFGEB2025" stylename="121">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-122.ufo" familyname="NFGEB2025" stylename="122">
+			<location>
+				<dimension name="Stroke width" xvalue="0.5" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-200.ufo" familyname="NFGEB2025" stylename="200">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-201.ufo" familyname="NFGEB2025" stylename="201">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-202.ufo" familyname="NFGEB2025" stylename="202">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="0.0" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-210.ufo" familyname="NFGEB2025" stylename="210">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-211.ufo" familyname="NFGEB2025" stylename="211">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-212.ufo" familyname="NFGEB2025" stylename="212">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="0.5" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-220.ufo" familyname="NFGEB2025" stylename="220">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="0.0" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-221.ufo" familyname="NFGEB2025" stylename="221">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="0.5" />
+			</location>
+		</source>
+		<source filename="NFGEB2025-222.ufo" familyname="NFGEB2025" stylename="222">
+			<location>
+				<dimension name="Stroke width" xvalue="1.0" />
+				<dimension name="Stroke height" xvalue="1.0" />
+				<dimension name="Stretch" xvalue="1.0" />
+			</location>
+		</source>
+	</sources>
+</designspace>

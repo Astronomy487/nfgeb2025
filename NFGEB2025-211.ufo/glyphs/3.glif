@@ -1,0 +1,3 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE glyph SYSTEM "http://unifiedfontobject.org/2012/glyphs.dtd">
+<glyph name="3" format="2"><unicode hex="0033" /><advance width="546.6666666666667" /><outline><contour><point x="10" y="633" type="move" /><point x="536" y="633" type="line" /><point x="536" y="500" type="line" /><point x="263" y="500" type="line" /><point x="263" y="300" type="line" /><point x="536" y="300" type="line" /><point x="536" y="166" type="line" /><point x="10" y="166" type="line" /></contour></outline></glyph>

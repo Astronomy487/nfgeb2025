@@ -1,0 +1,3 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE glyph SYSTEM "http://unifiedfontobject.org/2012/glyphs.dtd">
+<glyph name="period" format="2"><unicode hex="002E" /><advance width="273.33333333333337" /><outline><contour><point x="10" y="526" type="move" /><point x="263" y="526" type="line" /><point x="263" y="273" type="line" /><point x="10" y="273" type="line" /></contour></outline></glyph>
