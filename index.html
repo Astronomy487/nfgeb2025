@@ -52,12 +52,15 @@
 			margin: 0;
 		}
 		header h1 {
-			font-variation-settings: "AX01" 0.9, "AX02" 0.1, "AX03" 0.5;
+			font-weight: 800;
+			font-variation-settings: "CNTR" 0.9;
 			font-size: 12rem;
 			text-shadow: 0.375rem 0.375rem var(--black);
 		}
 		header h2 {
-			font-variation-settings: "AX01" 0.25, "AX02" 0.5, "AX03" 1.0;
+			font-weight: 500;
+			font-stretch: 180%;
+			font-variation-settings: "CNTR" 0.23, "GAPP" 0.1;
 			font-size: 2rem;
 			background: var(--white);
 			color: var(--black);
@@ -66,7 +69,7 @@
 			inset-inline-start: 50%;
 			text-align: center;
 			margin-top: -1rem;
-			width: 16rem;
+			width: 13rem;
 			transform: translate(-50%, 0);
 		}
 		header h3 {
@@ -120,9 +123,13 @@
 		.showoff td span {
 			display: block;
 			font-family: "NFGEB2025";
-			font-variation-settings: "AX01" 0.4, "AX02" 0.4, "AX03" 0.5;
-			margin-left: -0.375rem;
+			font-weight: 250;
 			font-size: 4rem;
+			font-variation-settings: "GAPP" 0, "DIDI" 0.4;
+		}
+		.showoff i {
+			font-style: normal;
+			color: var(--red);
 		}
 		.showoff#vowels td span {
 			margin-bottom: 1.5rem;
@@ -147,12 +154,15 @@
 			width: 100%;
 			border-collapse: collapse;
 		}
+		#axes td {
+			padding: 0;
+		}
 		#axes td:nth-child(1) {
 			width: 4rem;
 			font-family: monospace;
 		}
 		#axes td:nth-child(2) {
-			width: 9rem;
+			width: 12rem;
 		}
 		#axes td:nth-child(3) {
 			width: 4rem;
@@ -161,8 +171,9 @@
 		#axes td:nth-child(4) {
 			background: var(--gray);
 			user-select: none;
-			padding: 0;
 			vertical-align: middle;
+			border: solid 0 var(--black);
+			border-width: 0.5rem 0;
 		}
 		#axes td:nth-child(4) .progress {
 			background: var(--red);
@@ -226,6 +237,7 @@
 			{
 				let tr = document.querySelector(".showoff#vowels").appendChild(document.createElement("tr"));
 				for (let [element, vowels] of [
+					["", "no vowel"],
 					["a", "æ ɑː aɪ aʊ"],
 					["e", "ɛ eɪ"],
 					["i", "ɪ i"],
@@ -233,47 +245,47 @@
 					["u", "ʊ uː ʌ"]
 				]) {
 					let td = tr.appendChild(document.createElement("td"));
-					td.appendChild(document.createElement("span")).innerText = "m"+element;
+					td.appendChild(document.createElement("span")).innerHTML = "m<i>"+element+"</i>";
 					td.appendChild(document.createTextNode(vowels));
 				}
 			}
 		</script>
-		<p>NFGEB2025 is a variable font that implements a sans-serif typeface for NFGEB. I made it as a <a target="_blank" href="https://unifiedfontobject.org/">Unified Font Object</a>, compiled to TTF with Google’s <a target="_blank" href="https://github.com/googlefonts/fontmake">fontmake</a>. It is a variable font with three axes.</p>
-		<table id="axes">
-			<tr>
-				<td>AX01</td>
-				<td>Stroke width</td>
-				<td></td>
-				<td><div class="progress">&nbsp;</div></td>
-			</tr>
-			<tr>
-				<td>AX02</td>
-				<td>Stroke height</td>
-				<td></td>
-				<td><div class="progress">&nbsp;</div></td>
-			</tr>
-			<tr>
-				<td>AX03</td>
-				<td>Stretch</td>
-				<td></td>
-				<td><div class="progress">&nbsp;</div></td>
-			</tr>
-		</table>
+		<p>NFGEB2025 is a variable font that implements a sans-serif typeface for NFGEB. I made it as a <a target="_blank" href="https://unifiedfontobject.org/">Unified Font Object</a>, compiled to TTF with Google’s <a target="_blank" href="https://github.com/googlefonts/fontmake">fontmake</a>. It is a variable font with five axes.</p>
+		<table id="axes"></table>
 		<div id="axessample" contenteditable="plaintext-only" spellcheck="false">strnm.13213<br>ʧesnadi</div>
 		<script>
+			let axisDefs = [
+				{code: "wght", label: "Weight", def: 400, min: 100, max: 900},
+				{code: "CNTR", label: "Contrast", def: 0.5, min: 0, max: 1},
+				{code: "wdth", label: "Stretch", def: 100, min: 20, max: 180},
+				{code: "DIDI", label: "Diacritic distance", def: 1, min: 0, max: 1},
+				{code: "GAPP", label: "Gap", def: 0.5, min: 0, max: 1}
+			];
+			for (let axis of axisDefs) {
+				let tr = document.querySelector("#axes").appendChild(document.createElement("tr"));
+				tr.appendChild(document.createElement("td")).innerText = axis.code;
+				tr.appendChild(document.createElement("td")).innerText = axis.label;
+				tr.appendChild(document.createElement("td"));
+				let progress = tr.appendChild(document.createElement("td")).appendChild(document.createElement("div"));
+				progress.innerHTML = "&nbsp;";
+				progress.className = "progress";
+			}
+			
+			
 			let selectedAxis = undefined;
-			let axes = Array.from(document.querySelectorAll("#axes tr")).map(function(tr) {
+			let axes = Array.from(document.querySelectorAll("#axes tr")).map(function(tr, i) {
 				let numberLabel = tr.querySelector("td:nth-child(3)");
-				numberLabel.innerText = "0.50";
 				let td = tr.querySelector("td:has(.progress)");
 				let progress = td.querySelector(".progress");
-				progress.style.width = "50%";
+				progress.style.width = (axisDefs[i].def-axisDefs[i].min)/(axisDefs[i].max-axisDefs[i].min)*100+"%";
+				numberLabel.innerText = displayNumber(axisDefs[i].def);
 				let obj = {
-					td, progress, numberLabel, valuern: 0.5
+					td, progress, numberLabel, valuern: axisDefs[i].def, min: axisDefs[i].min, max: axisDefs[i].max
 				};
 				td.onmousedown = function(e) {
 					selectedAxis = obj;
 					let rect = this.getBoundingClientRect();
+					document.onmousemove(e);
 				}
 				return obj;
 			});
@@ -284,13 +296,23 @@
 				if (!selectedAxis) return;
 				let rect = selectedAxis.td.getBoundingClientRect();
 				let val = (e.clientX - rect.left) / rect.width;
-				val = Math.round(val*100)/100;
-				if (val < 0) val = 0;
-				if (val > 1) val = 1;
+				val = selectedAxis.min + val * (selectedAxis.max - selectedAxis.min);
+				val = roundNumber(val);
+				if (val < selectedAxis.min) val = selectedAxis.min;
+				if (val > selectedAxis.max) val = selectedAxis.max;
 				selectedAxis.valuern = val;
-				selectedAxis.progress.style.width = val*100+"%";
-				selectedAxis.numberLabel.innerText = val.toFixed(2);
-				axessample.style.fontVariationSettings = axes.map((v,i,a) => "'AX0"+(i+1)+"' " + v.valuern).join(", ");
+				selectedAxis.progress.style.width = (val - selectedAxis.min) / (selectedAxis.max - selectedAxis.min) * 100 + "%"
+				selectedAxis.numberLabel.innerText = displayNumber(val);
+				axessample.style.fontVariationSettings = axes.map((v,i,a) => "'"+axisDefs[i].code+"' " + v.valuern).join(", ");
+			}
+			
+			function roundNumber(x) {
+				if (x < 2) return Math.round(x*100)/100;
+				return Math.round(x/5)*5;
+			}
+			function displayNumber(x) {
+				if (x < 2) return x.toFixed(2);
+				return Math.round(x).toString().padStart(3, "0");
 			}
 		</script>
 		<p>The UFO source files (and the Python script that generated them) is visible in <a href="https://github.com/Astronomy487/nfgeb2025">the repository</a>.</p>

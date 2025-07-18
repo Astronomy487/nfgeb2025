@@ -3,8 +3,6 @@ import shutil
 
 import xml.etree.ElementTree as ET
 
-DOCT = '<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">'
-
 def generate_plist_etree(keys, output_path):
 	plist = ET.Element("plist", version="1.0")
 	dict_el = ET.SubElement(plist, "dict")
@@ -15,11 +13,9 @@ def generate_plist_etree(keys, output_path):
 		s.text = f"{key}.glif"
 	xml_bytes = ET.tostring(plist, xml_declaration=True, encoding="UTF-8")
 	lines = xml_bytes.decode("UTF-8").splitlines()
-	lines.insert(1, DOCT)
+	#lines.insert(1, DOCT)
 	with open(output_path, "w", encoding="UTF-8") as fp:
 		fp.write("\n".join(lines))
-
-DOCT_GLYPH = '<!DOCTYPE glyph SYSTEM "http://unifiedfontobject.org/2012/glyphs.dtd">'
 
 def generate_glif(save_path, name, unicode_hex, advance_width, contours):
 	glyph = ET.Element("glyph", name=name, format="2")
@@ -33,14 +29,12 @@ def generate_glif(save_path, name, unicode_hex, advance_width, contours):
 			ET.SubElement(cont_el, "point", x=str(int(x)), y=str(int(y)), type=pt_type)
 	xml_bytes = ET.tostring(glyph, xml_declaration=True, encoding="UTF-8")
 	lines = xml_bytes.decode("UTF-8").splitlines()
-	lines.insert(1, DOCT_GLYPH)
+	#lines.insert(1, DOCT_GLYPH)
 	with open(save_path, "w", encoding="UTF-8") as f:
 		f.write("\n".join(lines))
 
 def generate_layercontents_plist(path):
 	xml = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
-"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
   <array>
@@ -55,8 +49,6 @@ def generate_layercontents_plist(path):
 
 def generate_metainfo_plist(path):
 	xml = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
-"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
   <key>creator</key>
@@ -356,52 +348,135 @@ def get_reindex_sequence(amt): #amt in [0, 1]
 		lerp(-400, 0, amt)
 	]
 
-for ax01 in [0, 1, 2]:
-	for ax02 in [0, 1, 2]:
-		for ax03 in [0, 1, 2]:
-			dir = "NFGEB2025-" + str(ax01) + str(ax02) + str(ax03) + ".ufo"
-			if os.path.exists(dir):
-				shutil.rmtree(dir)
-			os.mkdir(dir)
-			os.mkdir(dir+"/glyphs")
+axes = [
+	{
+		"code": "wght",
+		"text": "Weight",
+		"default": 0.375,
+		"m": 800, "b": 100
+	},
+	{
+		"code": "CNTR",
+		"text": "Contrast",
+		"default": 0.5
+	},
+	{
+		"code": "wdth",
+		"text": "Stretch",
+		"default": 0.5,
+		"m": 160, "b": 20
+	},
+	{
+		"code": "DIDI",
+		"text": "Diacritic distance",
+		"default": 1
+	},
+	{
+		"code": "GAPP",
+		"text": "Gap",
+		"default": 0.5
+	}
+]
+
+for axis in axes:
+	if not("m" in axis):
+		axis["m"] = 1
+	if not("b" in axis):
+		axis["b"] = 0
+	#affine transformation to apply to internal axes to get external axis 
+
+sources = [[]]
+
+for axis in axes:
+	new_sources = []
+	for source in sources:
+		new_sources.append(source + [0])
+		new_sources.append(source + [1])
+		if (axis["default"] != 0 and axis["default"] != 1):
+			new_sources.append(source + [axis["default"]])
+	sources = new_sources
+
+sources = [{"stylename": str(i+1), "axisvalues": b} for i, b in enumerate(sources)]
+
+for d in os.listdir('sources'):
+	if d.endswith('.ufo') and os.path.isdir(os.path.join('sources',d)):
+		shutil.rmtree(os.path.join('sources',d))
+
+for source in sources:
+	ax01, ax02, ax03, ax04, ax05 = source["axisvalues"]
+	
+	dir = "sources/NFGEB2025-"+source["stylename"]+".ufo"
+	os.mkdir(dir)
+	os.mkdir(dir+"/glyphs")
+	
+	stroke_width = ax01 * min(2*ax02, 1)
+	stroke_height = ax01 * min(1, 2-2*ax02)
+	
+	x_reindex = get_reindex_sequence(stroke_width)
+	y_reindex = get_reindex_sequence(stroke_height)
+	x_multiplier = [
+		0.2, 1, 1.8
+	][int(ax03*2)]
+	
+	#gap = x_reindex[2] - x_reindex[1]
+	#gap *= x_multiplier
+	
+	#gap = 50 + 200*ax05
+	
+	gap_reindex_sequence = get_reindex_sequence(max(stroke_width, stroke_height))
+	gap = (gap_reindex_sequence[2] - gap_reindex_sequence[1]) * x_multiplier * ((ax05-0.5)*0.9+0.5)*2
+	
+	generate_plist_etree((x["name"] for x in characters), dir+"/glyphs/contents.plist")
+	for character in characters:
+		new_contours = []
+		max_x = 0
+		max_y = 0
+		for contour in character["contours"]:
+			new_contour = []
+			for pair in contour.split(" "):
+				x = int(pair[0])
+				x = x_reindex[x]*x_multiplier
+				y = int(pair[1])
+				y = y_reindex[y]
+				if ax04 == 0:
+					if y > 800:
+						y -= (y_reindex[6] - y_reindex[5])*0.8
+					if y < 0:
+						y -= (y_reindex[9] - y_reindex[0])*0.8
+				new_contour.append((x, y))
+			max_x = max(max_x, max(point[0] for point in new_contour))
+			max_y = max(max_y, max(point[1] for point in new_contour))
+			new_contours.append(new_contour)
+		if ("vowel" in character):
+			new_contours = [
+				[(x - gap/2 - 800*x_multiplier, y) for x, y in new_contour]
+				for new_contour in new_contours
+			]
+		else:
+			shift_amount = 400 - 0.5 * max_y
+			new_contours = [
+				[(x + gap/2, y + shift_amount) for x, y in new_contour]
+				for new_contour in new_contours
+			]
 			
-			x_reindex = get_reindex_sequence(ax01/2)
-			y_reindex = get_reindex_sequence(ax02/2)
-			x_multiplier = [
-				0.2, 1, 2
-			][ax03]
-			
-			gap = x_reindex[2] - x_reindex[1]
-			
-			generate_plist_etree((x["name"] for x in characters), dir+"/glyphs/contents.plist")
-			for character in characters:
-				new_contours = []
-				max_x = 0
-				max_y = 0
-				for contour in character["contours"]:
-					new_contour = []
-					for pair in contour.split(" "):
-						x = int(pair[0])
-						x = x_reindex[x]*x_multiplier
-						y = int(pair[1])
-						y = y_reindex[y]
-						new_contour.append((x, y))
-					max_x = max(max_x, max(point[0] for point in new_contour))
-					max_y = max(max_y, max(point[1] for point in new_contour))
-					new_contours.append(new_contour)
-				if ("vowel" in character):
-					new_contours = [
-						[(x - gap/2 - 800*x_multiplier, y) for x, y in new_contour]
-						for new_contour in new_contours
-					]
-				else:
-					shift_amount = 400 - 0.5 * max_y
-					new_contours = [
-						[(x + gap/2, y + shift_amount) for x, y in new_contour]
-						for new_contour in new_contours
-					]
-					
-				generate_glif(dir+"/glyphs/"+character["name"]+".glif", character["name"], character["hex"], 0 if ("vowel" in character) else (max_x+gap), new_contours)
-				
-			generate_layercontents_plist(dir+"/layercontents.plist")
-			generate_metainfo_plist(dir+"/metainfo.plist")
+		generate_glif(dir+"/glyphs/"+character["name"]+".glif", character["name"], character["hex"], 0 if ("vowel" in character) else (max_x+gap), new_contours)
+		
+	generate_layercontents_plist(dir+"/layercontents.plist")
+	generate_metainfo_plist(dir+"/metainfo.plist")
+
+if os.path.isfile("NFGEB2025.designspace"):
+	os.remove("NFGEB2025.designspace")
+designspace = ET.Element("designspace", format="3.0")
+axesxml = ET.SubElement(designspace, "axes")
+for axis in axes:
+	axisxml = ET.SubElement(axesxml, "axis", tag=axis["code"], name=axis["text"], minimum=str(axis["b"]), default=str(axis["m"]*axis["default"]+axis["b"]), maximum=str(axis["b"]+axis["m"]))
+sourcesxml = ET.SubElement(designspace, "sources")
+for source in sources:
+	sourcexml = ET.SubElement(sourcesxml, "source", filename="sources/NFGEB2025-"+source["stylename"]+".ufo", familyname="NFGEB2025", stylename=source["stylename"])
+	locationxml = ET.SubElement(sourcexml, "location")
+	for i, axis in enumerate(axes):
+		ET.SubElement(locationxml, "dimension", name=axis["text"], xvalue=str(axis["m"]*source["axisvalues"][i]+axis["b"]))
+with open("NFGEB2025.designspace", "w", encoding="UTF-8") as fp:
+	fp.write(ET.tostring(designspace, xml_declaration=True, encoding="UTF-8").decode("UTF-8"))
+
+os.system("fontmake -m NFGEB2025.designspace -o variable --output-path NFGEB2025.ttf")

@@ -1,3 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE glyph SYSTEM "http://unifiedfontobject.org/2012/glyphs.dtd">
-<glyph name="esh" format="2"><unicode hex="0283" /><advance width="1620.0" /><outline><contour><point x="10" y="800" type="move" /><point x="1610" y="800" type="line" /><point x="1610" y="0" type="line" /><point x="10" y="0" type="line" /></contour><contour><point x="516" y="786" type="move" /><point x="516" y="13" type="line" /><point x="556" y="13" type="line" /><point x="556" y="786" type="line" /></contour><contour><point x="1063" y="786" type="move" /><point x="1063" y="13" type="line" /><point x="1103" y="13" type="line" /><point x="1103" y="786" type="line" /></contour></outline></glyph>

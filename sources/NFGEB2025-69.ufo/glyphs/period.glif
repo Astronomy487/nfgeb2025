@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="period" format="2"><unicode hex="002E" /><advance width="33.33333333333336" /><outline><contour><point x="10" y="526" type="move" /><point x="23" y="526" type="line" /><point x="23" y="273" type="line" /><point x="10" y="273" type="line" /></contour></outline></glyph>
