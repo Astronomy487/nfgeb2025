@@ -1,2 +1,2 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<glyph name="1" format="2"><unicode hex="0031" /><advance width="431.1666666666667" /><outline><contour><point x="12" y="625" type="move" /><point x="25" y="625" type="line" /><point x="25" y="277" type="line" /><point x="418" y="277" type="line" /><point x="418" y="174" type="line" /><point x="12" y="174" type="line" /></contour></outline></glyph>
+<glyph name="1" format="2"><unicode hex="0031" /><advance width="1016.4000000000002" /><outline><contour><point x="34" y="603" type="move" /><point x="490" y="603" type="line" /><point x="490" y="210" type="line" /><point x="982" y="210" type="line" /><point x="982" y="196" type="line" /><point x="34" y="196" type="line" /></contour></outline></glyph>

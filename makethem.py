@@ -367,13 +367,13 @@ axes = [
 		"m": 160, "b": 20
 	},
 	{
-		"code": "DIDI",
-		"text": "Diacritic distance",
-		"default": 1
-	},
-	{
 		"code": "GAPP",
 		"text": "Gap",
+		"default": 0.5
+	},
+	{
+		"code": "DIDI",
+		"text": "Diacritic distance",
 		"default": 0.5
 	}
 ]
@@ -403,7 +403,7 @@ for d in os.listdir('sources'):
 		shutil.rmtree(os.path.join('sources',d))
 
 for source in sources:
-	ax01, ax02, ax03, ax04, ax05 = source["axisvalues"]
+	ax01, ax02, ax03, ax04, didi = source["axisvalues"]
 	
 	dir = "sources/NFGEB2025-"+source["stylename"]+".ufo"
 	os.mkdir(dir)
@@ -421,10 +421,10 @@ for source in sources:
 	#gap = x_reindex[2] - x_reindex[1]
 	#gap *= x_multiplier
 	
-	#gap = 50 + 200*ax05
+	#gap = 50 + 200*ax04
 	
 	gap_reindex_sequence = get_reindex_sequence(max(stroke_width, stroke_height))
-	gap = (gap_reindex_sequence[2] - gap_reindex_sequence[1]) * x_multiplier * ((ax05-0.5)*0.9+0.5)*2
+	gap = (gap_reindex_sequence[2] - gap_reindex_sequence[1]) * x_multiplier * ((ax04-0.5)*0.9+0.5)*2
 	
 	generate_plist_etree((x["name"] for x in characters), dir+"/glyphs/contents.plist")
 	for character in characters:
@@ -438,11 +438,11 @@ for source in sources:
 				x = x_reindex[x]*x_multiplier
 				y = int(pair[1])
 				y = y_reindex[y]
-				if ax04 == 0:
-					if y > 800:
-						y -= (y_reindex[6] - y_reindex[5])*0.8
-					if y < 0:
-						y -= (y_reindex[9] - y_reindex[0])*0.8
+				#manually force vowel diacritics to match gap
+				if y > 800:
+					y = (y - y_reindex[6]) + gap*(0.2+0.8*didi*2) + y_reindex[5]
+				if y < 0:
+					y = (y - y_reindex[9]) - gap*(0.2+0.8*didi*2) + y_reindex[0]
 				new_contour.append((x, y))
 			max_x = max(max_x, max(point[0] for point in new_contour))
 			max_y = max(max_y, max(point[1] for point in new_contour))

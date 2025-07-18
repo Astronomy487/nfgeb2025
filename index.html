@@ -125,7 +125,7 @@
 			font-family: "NFGEB2025";
 			font-weight: 250;
 			font-size: 4rem;
-			font-variation-settings: "GAPP" 0, "DIDI" 0.4;
+			font-variation-settings: "GAPP" 0.1, "DIDI" 1.0;
 		}
 		.showoff i {
 			font-style: normal;
@@ -257,9 +257,9 @@
 			let axisDefs = [
 				{code: "wght", label: "Weight", def: 400, min: 100, max: 900},
 				{code: "CNTR", label: "Contrast", def: 0.5, min: 0, max: 1},
-				{code: "wdth", label: "Stretch", def: 100, min: 20, max: 180},
-				{code: "DIDI", label: "Diacritic distance", def: 1, min: 0, max: 1},
-				{code: "GAPP", label: "Gap", def: 0.5, min: 0, max: 1}
+				{code: "GAPP", label: "Gap", def: 0.5, min: 0, max: 1},
+				{code: "DIDI", label: "Diacritic distance", def: 0.5, min: 0, max: 1},
+				{code: "wdth", label: "Stretch", def: 100, min: 20, max: 180}
 			];
 			for (let axis of axisDefs) {
 				let tr = document.querySelector("#axes").appendChild(document.createElement("tr"));
